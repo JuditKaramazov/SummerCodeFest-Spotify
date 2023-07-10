@@ -24,7 +24,7 @@ async function refreshAccessToken(token) {
     method: 'POST',
     headers: {
       Authorization:
-        'Basic ' + new Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_SECRET).toString('base64'),
+        'Basic ' + new Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_SECRET).toString('base64'), 
     },
     body: params,
   });

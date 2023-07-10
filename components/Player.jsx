@@ -1,7 +1,13 @@
-import { ArrowsRightLeftIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
-import { ArrowUturnLeftIcon, BackwardIcon, ForwardIcon, PauseCircleIcon, PlayCircleIcon } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { ArrowsRightLeftIcon, SpeakerWaveIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowUturnLeftIcon,
+  BackwardIcon,
+  ForwardIcon,
+  PauseCircleIcon,
+  PlayCircleIcon,
+} from '@heroicons/react/24/solid';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 function formatTime(milliseconds) {
   const totalSeconds = Math.floor(milliseconds / 1000);
@@ -10,7 +16,12 @@ function formatTime(milliseconds) {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-export default function Player({ globalCurrentTrackId, setGlobalCurrentTrackId, globalIsTrackPlaying, setGlobalIsTrackPlaying }) {
+export default function Player({
+  globalCurrentTrackId,
+  setGlobalCurrentTrackId,
+  globalIsTrackPlaying,
+  setGlobalIsTrackPlaying,
+}) {
   const [songInfo, setSongInfo] = useState(null);
   const { data: session, status } = useSession();
   const [volume, setVolume] = useState(50);
@@ -21,13 +32,13 @@ export default function Player({ globalCurrentTrackId, setGlobalCurrentTrackId, 
   async function getCurrentlyPlaying() {
     if (session?.user?.accessToken) {
       let token = session.user.accessToken;
-      const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
+      const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.status === 204) {
-        console.log("204 response from currently playing");
+        console.log('204 response from currently playing');
         return;
       }
       const data = await response.json();
@@ -40,8 +51,8 @@ export default function Player({ globalCurrentTrackId, setGlobalCurrentTrackId, 
     if (currentlyPlayingData && currentlyPlayingData.is_playing) {
       if (session && session.user && session.user.accessToken) {
         let token = session.user.accessToken;
-        const response = await fetch("https://api.spotify.com/v1/me/player/pause", {
-          method: "PUT",
+        const response = await fetch('https://api.spotify.com/v1/me/player/pause', {
+          method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -53,8 +64,8 @@ export default function Player({ globalCurrentTrackId, setGlobalCurrentTrackId, 
     } else {
       if (session && session.user && session.user.accessToken) {
         let token = session.user.accessToken;
-        const response = await fetch("https://api.spotify.com/v1/me/player/play", {
-          method: "PUT",
+        const response = await fetch('https://api.spotify.com/v1/me/player/play', {
+          method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -123,9 +134,9 @@ export default function Player({ globalCurrentTrackId, setGlobalCurrentTrackId, 
         }
       }
     }
-  
+
     fetchTrackInfo();
-  }, [globalCurrentTrackId, session]);  
+  }, [globalCurrentTrackId, session]);
 
   return (
     <div className="h-24 bg-neutral-800 border-t border-neutral-700 text-white px-2 md:px-8 relative">
@@ -173,11 +184,11 @@ export default function Player({ globalCurrentTrackId, setGlobalCurrentTrackId, 
         </div>
       </div>
       <div className="flex items-center space-x-4 absolute top-1/3 right-10 transform translate-y-1/2">
-      <div className="flex items-center space-x-3 md:space-x-4">
-        <SpeakerWaveIcon className="h-5 w-5 text-neutral-400 hover:text-white" />
-        <input type="range" min={0} max={100} className="accent-white hover:accent-green-600 w-14 md:w-28" />
+        <div className="flex items-center space-x-3 md:space-x-4">
+          <SpeakerWaveIcon className="h-5 w-5 text-neutral-400 hover:text-white" />
+          <input type="range" min={0} max={100} className="accent-white hover:accent-green-600 w-14 md:w-28" />
+        </div>
       </div>
     </div>
-  </div>
   );
-}  
+}

@@ -1,4 +1,5 @@
 # "Summer Code Fest": Spotify Replica
+
 ![Alt text](https://github.com/JuditKaramazov/SummerCodeFest-Spotify/blob/e06f60ddbb6ae5baf34e440150c209c5d1343850/public/Screenshot-1.PNG)
 
 ![Alt text](https://github.com/JuditKaramazov/SummerCodeFest-Spotify/blob/24877823d31a078756d9f6ef9ca095887182633c/public/Screenshot-5.png)
@@ -12,7 +13,7 @@ Before running the application, make sure you are taking into account the follow
   - `SPOTIFY_SECRET`: The client secret provided by Spotify for authentication.
   - `JWT_SECRET`: Secret key used for JSON Web Token (JWT) authentication.
 
-Please note that although the application aspires to replicate Spotify's interface, some of their functionalities are still not available (something we'll work on in the future, no worries!). 
+Please note that although the application aspires to replicate Spotify's interface, some of their functionalities are still not available (something we'll work on in the future, no worries!).
 To use the application, an active and operative Spotify account is required while interacting with the project itself, whether it's the Spotify application or the web player.
 
 ![Alt text](https://github.com/JuditKaramazov/SummerCodeFest-Spotify/blob/e06f60ddbb6ae5baf34e440150c209c5d1343850/public/Screenshot-2.png)
@@ -55,7 +56,6 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/user](http://localhost:3000/api/user). This endpoint can be edited in `pages/api/user.js`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
 
 ## Learn More
 

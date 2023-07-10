@@ -1,6 +1,6 @@
-import styled, { keyframes } from "styled-components";
-import { useEffect, useState, useRef } from "react";
-import useElementSize from "@/hooks/useElementSize";
+import styled, { keyframes } from 'styled-components';
+import { useEffect, useState, useRef } from 'react';
+import useElementSize from '@/hooks/useElementSize';
 
 const Container = styled.ul`
   height: clamp(30px, 10vh, 60px);
@@ -55,11 +55,7 @@ const MusicBars = () => {
       .map((_, i) => <Bar key={i} delay={-(Math.random() * 2)} />);
   }, []);
 
-  return (
-    <Container ref={container}>
-      {bars.current.slice(0, barsNumber)}
-    </ Container>
-  );
+  return <Container ref={container}>{bars.current.slice(0, barsNumber)}</Container>;
 };
 
 export default MusicBars;

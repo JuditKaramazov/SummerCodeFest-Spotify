@@ -1,5 +1,5 @@
-import NextAuth from "next-auth"
-import SpotifyProvider from "next-auth/providers/spotify"
+import NextAuth from "next-auth";
+import SpotifyProvider from "next-auth/providers/spotify";
 import fetch from "node-fetch";
 
 const scopes = [
@@ -8,32 +8,32 @@ const scopes = [
     "playlist-read-collaborative",
     "user-read-currently-playing",
     "user-modify-playback-state"
-].join(",")
+].join(",");
 
 const params = {
     scope: scopes
-}
+};
 
 const LOGIN_URL = "https://accounts.spotify.com/authorize?" + new URLSearchParams(params).toString();
 
 async function refreshAccessToken(token) {
-    const params = new URLSearchParams()
-    params.append("grant_type", "refresh_token")
-    params.append("refresh_token", token.refreshToken)
+    const params = new URLSearchParams();
+    params.append("grant_type", "refresh_token");
+    params.append("refresh_token", token.refreshToken);
     const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
         headers: {
             'Authorization': 'Basic ' + (new Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_SECRET).toString('base64'))
         },
         body: params
-    })
-    const data = await response.json()
+    });
+    const data = await response.json();
     return {
         ...token,
         accessToken: data.access_token,
         refreshToken: data.refresh_token ?? token.refreshToken,
         accessTokenExpires: Date.now() + data.expires_in * 1000
-    }
+    };
 }
 
 export const authOptions = {
@@ -44,28 +44,28 @@ export const authOptions = {
             authorization: LOGIN_URL
         }),
     ],
-    secret: process.env.JWT_SECRET,
+    secret: process.env.SECRET,
     pages: {
         signIn: "/login"
     },
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
-                token.accessToken = account.access_token
-                token.refreshToken = account.refresh_token
-                token.accessTokenExpires = account.expires_at
-                return token
+                token.accessToken = account.access_token;
+                token.refreshToken = account.refresh_token;
+                token.accessTokenExpires = account.expires_at;
+                return token;
             }
             if (token.accessTokenExpires && Date.now() < token.accessTokenExpires * 1000) {
-                return token
+                return token;
             }
-            return await refreshAccessToken(token)
+            return await refreshAccessToken(token);
         },
         async session({ session, token, user }) {
-            session.accessToken = token.accessToken
-            return session
+            session.accessToken = token.accessToken;
+            return session;
         }
     }
-}
+};
 
-export default NextAuth(authOptions)
+export default NextAuth(authOptions);
